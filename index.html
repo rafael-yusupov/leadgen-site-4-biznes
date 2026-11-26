@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Таргет для бизнеса: считаем продажи, а не заявки</title>
+<meta name="description" content="Реклама в Meta для бизнеса с отделом продаж. Ролики прогревают клиента до звонка, аналитика показывает, какой ролик приносит деньги.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0b09;--card:#18140f;--line:#2b251d;--text:#f5f2ea;--mute:#a59d8f;--yellow:#F7F46A;--ink:#111;--paper:#f3efe6;--red:#ff7a5c}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:400 17px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+section{padding:64px 0}
+h1,h2,h3,.os{font-family:Oswald,"Arial Narrow",sans-serif;font-weight:700;text-transform:uppercase;line-height:1.12;letter-spacing:.01em}
+h1{font-size:clamp(44px,9.5vw,92px)}
+h2{font-size:clamp(32px,5.8vw,60px);margin-bottom:18px}
+h3{font-size:22px;line-height:1.15}
+.y{color:var(--yellow)}
+.mark{background:linear-gradient(var(--yellow),var(--yellow)) 0 62%/100% .96em no-repeat;color:var(--ink);padding:0 .14em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.tag{font:600 13px/1.2 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);margin-bottom:16px;display:block}
+.lead{font-size:clamp(18px,2.2vw,21px);color:#ddd8cc;max-width:640px}
+.btn{display:inline-block;background:var(--yellow);color:var(--ink);font:700 19px/1 Oswald,sans-serif;text-transform:uppercase;letter-spacing:.04em;padding:20px 30px;border-radius:6px;text-decoration:none;border:0;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(247,244,106,.25)}
+.under{font-size:14px;color:var(--mute);margin-top:14px}
+.ex{display:inline-block;font:600 11px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;border:1px solid currentColor;border-radius:100px;padding:5px 9px;opacity:.6}
+.paper{background:var(--paper);color:var(--ink)}
+.paper .tag{color:#6b6657}.paper .lead{color:#33302a}
+
+/* появление при скролле */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s}
+.rv.in{opacity:1;transform:none}
+
+/* бегущая строка */
+.tick{background:var(--yellow);color:var(--ink);overflow:hidden;white-space:nowrap;font:700 14px/1 Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:10px 0}
+.tick div{display:inline-block;animation:tick 28s linear infinite}
+.tick span{margin:0 18px}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+nav{padding:16px 0}
+nav .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
+nav .logo{font:700 clamp(13px,3.7vw,20px)/1 Oswald,sans-serif;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+nav a.s{font:600 clamp(12px,3.3vw,14px)/1 Inter,sans-serif;color:var(--text);text-decoration:none;border:1px solid #4a4234;border-radius:100px;padding:10px 14px;white-space:nowrap;flex:none}
+
+/* hero */
+.hero{padding:32px 0 72px;background:radial-gradient(900px 520px at 90% -10%,rgba(247,244,106,.11),transparent 60%)}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero .lead{margin:22px 0 30px}
+.dash{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.dash .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:13px;color:var(--mute)}
+.row{display:grid;grid-template-columns:1fr auto;gap:6px 12px;padding:14px;border:1px solid var(--line);border-radius:12px;margin-top:10px;transition:border-color .4s,background .4s}
+.row .nm{font-weight:600;font-size:15px}
+.row .st{display:flex;gap:16px;font-size:13px;color:var(--mute);grid-column:1/-1}
+.row .st b{color:var(--text);font-weight:600}
+.row .pay{font:700 30px/1 Oswald,sans-serif;text-align:right}
+.row .pay small{display:block;font:400 11px Inter;color:var(--mute);margin-top:3px}
+.bdg{font:700 12px/1 Oswald,sans-serif;letter-spacing:.1em;padding:6px 9px;border-radius:5px;opacity:0;transform:scale(.8);transition:.3s;align-self:start;justify-self:end}
+.dash.done .bdg{opacity:1;transform:none}
+.dash.done .row.up{border-color:var(--yellow);background:rgba(247,244,106,.07)}
+.dash.done .row.dn{opacity:.55}
+.up .bdg{background:var(--yellow);color:var(--ink)}
+.dn .bdg{background:#3a2019;color:var(--red)}
+.ts .bdg{background:#2b251d;color:#cfc9bc}
+
+.row .q{grid-column:1/-1;height:10px;border-radius:10px;background:#2b251d;overflow:hidden;margin-top:4px}
+.row .q i{display:block;height:100%;width:0;background:#8a8273;border-radius:10px;transition:width 1.3s cubic-bezier(.2,.8,.2,1)}
+.row.up .q i{background:var(--yellow)}
+.dash .ft{font-size:14px;color:#cfc9bc;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.hero .stats{grid-template-columns:repeat(3,1fr);gap:14px;align-items:start}
+.stats div{border-top:2px solid var(--yellow);padding-top:14px}
+.stats b{display:block;font:700 clamp(34px,5.4vw,56px)/1.05 Oswald,sans-serif}
+.stats div>span{font-size:14px;color:var(--mute)}
+.ans{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px}
+.ans div{border:1px solid var(--line);border-radius:14px;padding:20px;background:var(--card);font:700 20px/1.15 Oswald,sans-serif;text-transform:uppercase;color:#6b6352;transition:color .4s,border-color .4s,background .4s}
+.ans div:before{content:"?";display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:2px solid currentColor;margin-bottom:14px;font-size:18px}
+.ans div.in{color:var(--text);border-color:var(--yellow);background:rgba(247,244,106,.07)}
+.ans div.in:before{content:"✓";background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.vs p{border-radius:12px;padding:16px 18px;font-size:15px;border:1px dashed #4a4234;color:var(--mute)}
+.vs p b{display:block;font:700 22px/1.1 Oswald,sans-serif;text-transform:uppercase;color:var(--text);margin-bottom:4px}
+.vs p.w{border:1px solid var(--yellow);color:#ddd8cc}.vs p.w b{color:var(--yellow)}
+.team{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+.team div{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:22px;color:var(--mute);font-size:14px;display:flex;gap:16px;align-items:center}
+.team i{flex:none;width:72px;height:72px;border-radius:50%;background:#1f1a13;display:grid;place-items:center;font-style:normal;font-size:11px}
+.team b{display:block;font:700 20px/1.1 Oswald,sans-serif;text-transform:uppercase;color:var(--text);margin-bottom:4px}
+#bar{position:fixed;top:0;left:0;height:3px;background:var(--yellow);width:0;z-index:20}
+.row .prc{font:600 13px Inter,sans-serif;color:var(--mute);align-self:center}
+.row.up .prc{color:var(--yellow)}
+.ppl{grid-column:1/-1;display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin:10px 0 6px}
+.ppl svg{width:100%;height:auto;fill:#3a3328;transition:fill .35s,transform .35s}
+.ppl svg.on{fill:#cfc9bc;transform:translateY(-3px)}
+.row.up .ppl svg.on{fill:var(--yellow)}
+.row .cap{grid-column:1/-1;font-size:15px;color:#cfc9bc}
+.row .cap b{font:700 28px/1 Oswald,sans-serif;color:var(--text);margin-right:6px}
+.row.up .cap b{color:var(--yellow)}
+.dash.done .row.dn{opacity:.8}
+.stats-h{margin-top:64px}
+.stats-h .tag{margin-bottom:14px}
+/* примеры креативов */
+.adz{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px;max-width:680px}
+.adz figure{container-type:inline-size}
+.ph{aspect-ratio:9/16;border-radius:9cqw;border:1.6cqw solid #2b251d;overflow:hidden;position:relative;font-size:5cqw}
+.ph.bad{background:linear-gradient(160deg,#2f6bff,#7a2fff 60%,#ff4fa3);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6cqw;gap:3cqw;filter:saturate(.85)}
+.ph.bad b{font:700 13cqw/1 Oswald,sans-serif;text-transform:uppercase}
+.ph.bad em{font-style:normal;background:#ffe600;color:#d4001a;font:700 8cqw/1 Oswald,sans-serif;padding:2cqw 4cqw;border-radius:2cqw;transform:rotate(-6deg);text-transform:uppercase}
+.ph.bad small{font-size:5cqw;opacity:.95}
+.ph.bad u{text-decoration:none;background:#fff;color:#2f6bff;font:700 6cqw/1 Inter,sans-serif;padding:3.5cqw 7cqw;border-radius:20cqw;margin-top:2cqw}
+.ph.good{background:radial-gradient(120% 70% at 50% 30%,#6b4a2c,#2a1c11 55%,#0d0b09)}
+.ph.good .hd{position:absolute;left:50%;top:22%;width:30cqw;height:30cqw;border-radius:50%;background:#d9a57c;transform:translateX(-50%)}
+.ph.good .bd{position:absolute;left:50%;top:48%;width:66cqw;height:60cqw;border-radius:33cqw 33cqw 0 0;background:#1d1a17;transform:translateX(-50%)}
+.ph.good .rec{position:absolute;top:5cqw;left:6cqw;font:600 4.4cqw Inter,sans-serif;color:#fff;opacity:.85}
+.ph.good .sub{position:absolute;left:5cqw;right:5cqw;bottom:20cqw;text-align:center;font:700 9.5cqw/1.05 Oswald,sans-serif;text-transform:uppercase;color:#fff;text-shadow:0 .6cqw 3cqw rgba(0,0,0,.8);opacity:0;animation:sb 10s infinite}
+.ph.good .sub i{font-style:normal;color:var(--yellow)}
+.ph.good .sub:nth-of-type(2){animation-delay:2.5s}.ph.good .sub:nth-of-type(3){animation-delay:5s}.ph.good .sub:nth-of-type(4){animation-delay:7.5s}
+@keyframes sb{0%{opacity:0;transform:scale(.85)}2%,23%{opacity:1;transform:none}25%,100%{opacity:0}}
+.ph.good .pb{position:absolute;left:5cqw;right:5cqw;bottom:8cqw;height:1.4cqw;background:rgba(255,255,255,.25);border-radius:2cqw;overflow:hidden}
+.ph.good .pb:after{content:"";position:absolute;inset:0;background:var(--yellow);transform-origin:left;animation:pb 10s linear infinite}
+@keyframes pb{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.adz .dots{display:flex;gap:6px;justify-content:center;margin:14px 0 8px}
+.adz .dots i{width:26px;height:26px;border-radius:50%;border:2px solid #4a4234;display:grid;place-items:center;font:700 13px Inter,sans-serif;font-style:normal;color:#6b6352}
+.adz .dots i:before{content:"?"}
+.adz .ok i{animation:dk 10s infinite}
+.adz .ok i:before{content:"✓"}
+.adz .ok i:nth-child(2){animation-name:dk2}.adz .ok i:nth-child(3){animation-name:dk3}.adz .ok i:nth-child(4){animation-name:dk4}
+@keyframes dk{0%,12%{background:transparent;border-color:#4a4234;color:transparent}14%,96%{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}100%{background:transparent;color:transparent}}
+@keyframes dk2{0%,37%{background:transparent;border-color:#4a4234;color:transparent}39%,96%{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}100%{background:transparent;color:transparent}}
+@keyframes dk3{0%,62%{background:transparent;border-color:#4a4234;color:transparent}64%,96%{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}100%{background:transparent;color:transparent}}
+@keyframes dk4{0%,87%{background:transparent;border-color:#4a4234;color:transparent}89%,96%{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}100%{background:transparent;color:transparent}}
+.adz figcaption{text-align:center;font-size:14px;color:var(--mute)}
+.adz figcaption b{display:block;font:700 19px/1.15 Oswald,sans-serif;text-transform:uppercase;color:var(--text);margin-bottom:4px}
+.adz .w figcaption b{color:var(--yellow)}
+/* воронки */
+.fun{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0 18px}
+.fun>div{border:2px solid var(--ink);border-radius:12px;padding:22px;background:#fff}
+.fun .win{background:var(--yellow)}
+.fun h3{margin-bottom:4px}
+.fun .sub{font-size:14px;color:#4a463d;margin-bottom:16px}
+.bar{margin-top:10px;font-size:13px}
+.bar i{display:block;height:30px;background:var(--ink);border-radius:5px;width:0;min-width:4px;transition:width 1.1s cubic-bezier(.2,.8,.2,1);margin-top:3px}
+.bar span{display:flex;justify-content:space-between}
+.bar b{font-weight:600}
+.res{border-top:2px solid var(--ink);margin-top:18px;padding-top:12px;display:flex;justify-content:space-between;align-items:baseline}
+.res b{font:700 44px/1 Oswald,sans-serif}
+.fun dl{display:grid;grid-template-columns:1fr auto;gap:6px 12px;font-size:15px;margin-bottom:6px}.fun dd{font-weight:600}
+
+/* калькулятор */
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:32px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px}
+.calc label{display:flex;justify-content:space-between;font-size:15px;color:#cfc9bc;margin-top:20px}
+.calc label:first-child{margin-top:0}
+.calc label b{color:var(--text);font:700 22px/1 Oswald,sans-serif}
+input[type=range]{width:100%;accent-color:var(--yellow);margin-top:10px;height:28px}
+.out{border-left:1px solid var(--line);padding-left:32px;display:flex;flex-direction:column;justify-content:center}
+.out .big{font:700 clamp(64px,11vw,104px)/1 Oswald,sans-serif;color:var(--yellow)}
+.out p{color:#cfc9bc;margin-top:6px}
+.out .mini{display:flex;gap:28px;margin:20px 0 24px}
+.out .mini b{display:block;font:700 28px/1 Oswald,sans-serif;color:var(--text)}
+.out .mini span{font-size:13px;color:var(--mute)}
+
+/* шаги */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:32px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column}
+.step .num{color:var(--yellow);font:700 14px/1 Oswald,sans-serif;letter-spacing:.12em;margin-bottom:12px}
+.step p{color:#bfb8aa;font-size:15px;margin-top:8px}
+.viz{height:92px;margin-top:auto;padding-top:18px;display:flex;align-items:flex-end;gap:8px}
+.v1{align-items:center;position:relative}
+.v1 em{font:600 12px Inter;font-style:normal;border:1px solid #4a4234;border-radius:6px;padding:7px 8px;background:#0f0d0a;z-index:1}
+.v1 em:last-of-type{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
+.v1 u{flex:1;height:2px;background:#4a4234;position:relative;overflow:hidden}
+.v1 u:after{content:"";position:absolute;inset:0;width:40%;background:var(--yellow);animation:flow 1.6s linear infinite}
+@keyframes flow{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
+.v2 s{flex:1;height:64px;border-radius:6px;background:#2b251d;text-decoration:none;font:700 11px Oswald;color:#8a8273;padding:6px;animation:fr 3s infinite}
+.v2 s:nth-child(2){animation-delay:1s}.v2 s:nth-child(3){animation-delay:2s}
+@keyframes fr{0%,30%{background:var(--yellow);color:var(--ink)}34%,100%{background:#2b251d;color:#8a8273}}
+.v3{flex-direction:column;align-items:stretch;gap:6px}
+.v3 em{font:500 12px Inter;font-style:normal;border:1px solid #4a4234;border-radius:6px;padding:6px 8px;color:#cfc9bc}
+.v3 em:nth-child(2){animation:pick 3s infinite}
+@keyframes pick{0%,40%{background:transparent;color:#cfc9bc}50%,100%{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}}
+.v4 i{flex:1;border-radius:5px 5px 0 0;background:#3a3328}
+.v4 i:nth-child(1){height:60%;animation:dn 3s ease-in-out infinite alternate}
+.v4 i:nth-child(2){height:30%;background:var(--yellow);animation:up 3s ease-in-out infinite alternate}
+.v4 i:nth-child(3){height:40%}
+@keyframes up{to{height:100%}}@keyframes dn{to{height:8%}}
+
+/* видео */
+.video{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#000;margin-top:28px}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* примеры сценариев */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 20px}
+.tabs button{font:600 15px Inter;border:2px solid var(--ink);background:transparent;border-radius:100px;padding:10px 16px;cursor:pointer;color:var(--ink)}
+.tabs button.on{background:var(--ink);color:var(--yellow)}
+.frames{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.frame{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:18px;opacity:0;transform:translateY(14px);animation:fin .45s forwards}
+.frame:nth-child(2){animation-delay:.12s}.frame:nth-child(3){animation-delay:.24s}.frame:nth-child(4){animation-delay:.36s}.frame:nth-child(5){animation-delay:.48s}
+@keyframes fin{to{opacity:1;transform:none}}
+.frame .t{font:700 13px Oswald;letter-spacing:.1em;text-transform:uppercase;color:#6b6657}
+.frame .q{font:600 16px/1.35 Inter,sans-serif;margin:10px 0 0}
+.frame .t b{display:block;font-size:26px;color:var(--ink);letter-spacing:0;margin-bottom:2px}
+.frame .c{font-size:14px;color:#4a463d;border-top:1px dashed #b9b3a4;padding-top:10px}
+
+/* кейсы */
+.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+.case{border:2px dashed #5a5140;border-radius:14px;padding:22px}
+.case .shot{aspect-ratio:16/10;border-radius:8px;background:repeating-linear-gradient(45deg,#18140f,#18140f 10px,#1f1a13 10px,#1f1a13 20px);display:grid;place-items:center;color:#6b6352;font-size:13px;margin:14px 0}
+.case .kp{display:flex;gap:18px;margin-top:12px}
+.case .kp b{display:block;font:700 28px/1 Oswald;color:var(--yellow)}
+.case .kp span{font-size:12px;color:var(--mute)}
+.case p{font-size:14px;color:var(--mute);margin-top:10px}
+
+/* подходит */
+.fit{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+.fit>div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px}
+.fit ul{list-style:none;margin-top:10px}
+.fit li{padding:8px 0 8px 26px;position:relative;color:#d6d0c3;font-size:16px}
+.fit li:before{position:absolute;left:0;font-weight:700;font-size:19px;line-height:1.25}
+.fit .yes li:before{content:"+";color:var(--yellow)}.fit .no li:before{content:"–";color:#8a8273}
+
+/* квиз */
+.quiz{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.quiz ol{list-style:none;counter-reset:a;margin-top:22px}
+.quiz ol li{counter-increment:a;padding:12px 0 12px 48px;position:relative;color:#ddd8cc}
+.quiz ol li:before{content:"0" counter(a);position:absolute;left:0;top:10px;font:700 24px/1 Oswald;color:var(--yellow)}
+form{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;min-height:420px}
+.prog{height:4px;background:#2b251d;border-radius:4px;margin-bottom:22px;overflow:hidden}
+.prog i{display:block;height:100%;width:33%;background:var(--yellow);transition:width .35s}
+.qs{display:none}.qs.on{display:block;animation:fin .35s forwards}
+.qs h3{margin-bottom:16px}
+.opt{display:block;width:100%;text-align:left;background:#0f0d0a;border:1px solid #3a3328;border-radius:10px;color:var(--text);font:500 16px Inter;padding:15px 16px;margin-top:8px;cursor:pointer;transition:.15s}
+.opt:hover{border-color:var(--yellow);transform:translateX(4px)}
+form input{width:100%;background:#0f0d0a;border:1px solid #3a3328;border-radius:10px;color:var(--text);font:400 16px Inter;padding:15px;margin-top:8px}
+form input:focus{outline:2px solid var(--yellow);outline-offset:1px}
+form .btn{width:100%;margin-top:16px;text-align:center}
+.back{background:none;border:0;color:var(--mute);font:500 14px Inter;margin-top:14px;cursor:pointer}
+#msg{font-size:14px;color:var(--yellow);margin-top:12px}
+
+details{border-bottom:1px solid var(--line);padding:18px 0}
+summary{font:600 18px/1.35 Inter;cursor:pointer;list-style:none;padding-right:36px;position:relative}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";position:absolute;right:0;top:-5px;font-size:28px;color:var(--yellow);font-weight:400}
+details[open] summary:after{content:"–"}
+details p{color:#cfc9bc;margin-top:10px;max-width:720px}
+
+/* проекты в цифрах */
+.meta{font:600 12px/1.2 Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#cases .feat{display:grid;grid-template-columns:1fr 1.1fr;gap:36px;margin-top:28px;align-items:end;background:var(--card);border:1px solid var(--yellow);border-radius:16px;padding:26px}
+#cases .feat>div{min-width:0}
+#cases .kp{display:grid;grid-template-columns:1fr 1fr;gap:16px 12px;margin:16px 0}
+#cases .kp>div{min-width:0}
+#cases .kp small{display:block;font-size:12px;color:var(--mute);margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#cases .kp b{display:block;font:700 24px/1.05 Oswald,sans-serif;white-space:nowrap;font-variant-numeric:tabular-nums}
+#cases .kp .w{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px}
+#cases .kp .w b{font-size:clamp(26px,7.6vw,34px);color:var(--yellow)}
+#cases .kp .w em{font-style:normal;font-size:13px;color:var(--mute);display:block;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#cases .feat .kp .w b{font-size:clamp(36px,6vw,60px)}
+#cases .feat p,.cs p{font-size:14px;color:#bfb8aa}
+.chart{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;align-items:end;height:200px}
+.chart div{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;position:relative}
+.chart i{display:block;width:100%;border-radius:5px 5px 0 0;background:var(--yellow);height:0;transition:height 1.2s cubic-bezier(.2,.8,.2,1)}
+.chart u{position:absolute;left:25%;right:25%;bottom:0;border-radius:3px 3px 0 0;background:#0d0b09;opacity:.6;height:0;transition:height 1.2s cubic-bezier(.2,.8,.2,1)}
+.mon{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-top:8px;font-size:10px;color:var(--mute);text-align:center}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--mute);margin-bottom:14px}
+.legend span:before{content:"";display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--yellow);margin-right:6px}
+.legend span+span:before{background:#6b6a2e}
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.cs{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;min-width:0}
+.cs h3{min-height:2.3em}
+.cs p{flex:1;margin-bottom:16px}
+.cs .shot{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid #4a4234;border-radius:100px;color:var(--text);font:600 13px/1 Inter,sans-serif;padding:10px 14px;cursor:pointer;transition:border-color .2s,color .2s}
+.cs .shot:hover{border-color:var(--yellow);color:var(--yellow)}
+.cs .shot svg,.arrows svg,.lbh svg{display:block;flex:none;width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.morewrap{text-align:center;margin-top:22px}
+.btn.ghost{background:transparent;color:var(--text);border:2px solid var(--yellow)}
+@media(min-width:901px){.cgrid.fold>*:nth-child(n+7){display:none}}
+/* отзывы */
+.hrow{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+.arrows{display:flex;gap:8px;flex:none;margin-bottom:22px}
+.arrows button{width:44px;height:44px;border-radius:50%;border:1px solid #4a4234;background:transparent;color:var(--text);cursor:pointer;display:grid;place-items:center;transition:border-color .2s,color .2s}
+.arrows button:hover{border-color:var(--yellow);color:var(--yellow)}
+.snap{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:28px -20px 0;padding:0 20px;scroll-padding:0 20px}
+.snap::-webkit-scrollbar,.cgrid::-webkit-scrollbar{display:none}
+.snap>*{flex:0 0 min(78vw,300px);scroll-snap-align:start}
+.rw{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.rw video{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:#000}
+.rw h3{font-size:20px;margin-top:16px}
+.rw small{display:block;font-size:13px;color:var(--mute);margin-top:4px}
+.rw p{font-size:15px;color:#ddd8cc;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+/* окно со скриншотами */
+dialog{border:1px solid var(--line);background:#14110d;color:var(--text);border-radius:16px;padding:18px;width:min(94vw,980px);max-height:88vh;overflow:auto;margin:auto}
+dialog::backdrop{background:rgba(0,0,0,.76);backdrop-filter:blur(4px)}
+.lbh{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.lbh h3{margin:0}
+.lbh button{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid #4a4234;background:transparent;color:var(--text);cursor:pointer;display:grid;place-items:center}
+.lbin img{display:block;width:100%;border-radius:10px;margin-top:12px}
+.lbin img.pf{max-width:520px}
+@media(max-width:900px){
+  #cases .feat{grid-template-columns:1fr;gap:24px;padding:20px}
+  .chart{height:150px;gap:4px}.mon{gap:4px}
+  .cgrid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:14px -20px 0;padding:0 20px;scroll-padding:0 20px;align-items:stretch}
+  .cgrid>*{flex:0 0 min(82vw,330px);scroll-snap-align:start}
+  .morewrap{display:none}
+}
+@media(max-width:560px){.arrows{display:none}.hrow{display:block}}
+
+.team img{flex:none;width:72px;height:72px;border-radius:50%;object-fit:cover}
+.team p{min-width:0}
+.soc{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.soc a{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:100px;border:1px solid #4a4234;color:var(--text);font:500 13px/1 Inter,sans-serif;text-decoration:none;white-space:nowrap;transition:border-color .2s,color .2s}
+.soc a:hover{border-color:var(--yellow);color:var(--yellow)}
+.soc svg{display:block;flex:none;width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.fl{display:flex;flex-wrap:wrap;gap:22px 48px}
+.fl b{display:block;font-weight:600;color:var(--text);font-size:14px}
+.rw .yt,.rw iframe{display:block;width:100%;aspect-ratio:1;border-radius:10px;background:#000;border:0;padding:0}
+.rw .yt{position:relative;overflow:hidden;cursor:pointer}
+.rw .yt[hidden]{display:none}
+.rw .yt img{display:block;width:100%;height:100%;object-fit:cover}
+.rw .pl{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.rw .pl svg{display:block;width:26px;height:26px;fill:#111}
+footer{border-top:1px solid var(--line);padding:28px 0;font-size:13px;color:var(--mute)}
+
+@media(min-width:901px){section{padding:92px 0}.hero{padding:40px 0 96px}}
+@media(max-width:900px){
+  .hero .wrap,.fun,.calc,.frames,.cases,.fit,.quiz,.team{grid-template-columns:1fr}
+  .ans{grid-template-columns:1fr 1fr}.hero .stats{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .out{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:24px}
+  .hero .wrap{gap:36px}
+}
+@media(max-width:520px){.steps,.vs{grid-template-columns:1fr}.stats{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.frame{opacity:1;transform:none}}
+
+/* ---- форма заявки: жёлтая карточка */
+form{background:var(--yellow);color:var(--ink);border:0;box-shadow:0 24px 70px -28px rgba(247,244,106,.5)}
+.fhead{display:flex;justify-content:space-between;align-items:center;gap:10px;font:700 12px/1 Inter,sans-serif;text-transform:uppercase;letter-spacing:.06em}
+.fhead b{background:#111;color:var(--yellow);padding:8px 10px;border-radius:6px;white-space:nowrap}
+.fhead span{color:#4d4a1c;white-space:nowrap}
+.fsub{font-size:15px;line-height:1.4;color:#33301a;margin:14px 0 16px}
+form .prog{background:rgba(0,0,0,.14)}form .prog i{background:#111}
+form .qs h3{color:#111}
+form .opt{background:#111;border-color:#111;color:#fff;position:relative;padding-right:44px}
+form .opt:after{content:"→";position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--yellow)}
+form .opt:hover{border-color:#111;background:#2a2620}
+form input{background:#fff;border-color:#111;color:#111}
+form input::placeholder{color:#77735f}
+form input:focus{outline:2px solid #111;outline-offset:1px}
+form .btn{background:#111;color:var(--yellow)}
+form .btn:hover{box-shadow:0 10px 30px rgba(0,0,0,.3)}
+form .back{color:#4d4a1c}
+form #msg{color:#111}
+form #ok h3{color:#111}
+form #ok p{color:#33302a!important}
+
+/* ---- кейсы: своя полоса фона, лента с логотипами */
+#cases{background:#1b1711;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+#cases .feat{background:#0d0b09}
+.crow{margin-top:48px;align-items:center}
+.crow h3{font-size:26px}
+.swipe{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--mute);margin-top:6px}
+.swipe svg{flex:none;width:18px;height:18px;fill:none;stroke:var(--yellow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;animation:nudge 1.2s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(6px)}}
+#cases .arrows{display:flex;margin-bottom:0}
+#cases .arrows button{width:48px;height:48px;background:var(--yellow);border-color:var(--yellow);color:#111}
+#cases .arrows button:hover{background:#fff;border-color:#fff;color:#111}
+#cases .arrows button:disabled{background:transparent;border-color:#4a4234;color:#6b6456;cursor:default}
+#cases .arrows svg{width:18px;height:18px}
+#cases .cgrid{display:flex;grid-template-columns:none;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:20px -20px 0;padding:0 20px 6px;scroll-padding:0 20px;align-items:stretch}
+#cases .cgrid::-webkit-scrollbar{display:none}
+#cases .cgrid>*{display:flex;flex:0 0 min(80vw,340px);scroll-snap-align:start}
+#cases .cs{background:#0d0b09;border:1px solid #3a3328;border-radius:16px;padding:22px;opacity:1;transform:none}
+.ch{display:flex;align-items:center;gap:12px;min-height:60px;margin-bottom:6px}
+.ch>div{min-width:0}
+.ch .meta{margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#cases .ch h3{min-height:0;font-size:21px;line-height:1.15}
+.lg{flex:none;width:54px;height:54px;border-radius:50%;object-fit:cover;background:#fff;border:2px solid var(--yellow)}
+.lg.mono{display:grid;place-items:center;background:#241e16;color:var(--yellow);font:700 21px/1 Oswald,sans-serif}
+.lg.mono.s{font-size:13px;letter-spacing:.04em}
+.ctrack{height:4px;background:#2b251d;border-radius:4px;margin-top:24px;overflow:hidden}
+.ctrack i{display:block;height:100%;width:20%;background:var(--yellow);border-radius:4px}
+@media(max-width:560px){#cases .hrow.crow{display:flex}.crow h3{font-size:22px}#cases .arrows button{width:44px;height:44px}#cases .cgrid{gap:14px}}
+.quiz>*,.start>*{min-width:0}.fhead{flex-wrap:wrap}
+.ch h3{overflow-wrap:anywhere}
+@media(max-width:350px){#cases .ch h3{font-size:18px}#cases .kp>div:not(.w) b{font-size:21px}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+
+<div class="tick" aria-hidden="true"><div>
+  <span>Считаем продажи, а не заявки</span>✦<span>Meta Ads для бизнеса</span>✦<span>10–20 сценариев роликов в месяц</span>✦<span>Статика без лимита</span>✦<span>Прогрев до звонка</span>✦
+  <span>Считаем продажи, а не заявки</span>✦<span>Meta Ads для бизнеса</span>✦<span>10–20 сценариев роликов в месяц</span>✦<span>Статика без лимита</span>✦<span>Прогрев до звонка</span>✦
+</div></div>
+
+<nav><div class="wrap">
+  <span class="logo">Таргет <span class="y">для бизнеса</span></span>
+  <a class="s" href="#razbor">Экскурсия <span class="y">→</span></a>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="tag">Meta Ads для бизнеса с отделом продаж</span>
+      <h1>Вам нужны не заявки. Вам нужны <span class="y">продажи</span>.</h1>
+      <p class="lead">Реклама в Meta для бизнеса, где клиент думает перед покупкой. Ролики прогревают его ещё до звонка менеджера. Аналитика показывает, какой ролик приносит деньги.</p>
+      <a href="#razbor" class="btn">Примерить на мой бизнес</a>
+      <p class="under">Онлайн-экскурсия по системе и разбор вашего проекта · бесплатно</p>
+    </div>
+    <div class="dash" id="dash">
+      <div class="hd"><span>Один проект. Две рекламы.</span><span class="ex">из проекта</span></div>
+      <div class="row dn">
+        <span class="nm">Реклама «в лоб»</span><span class="prc">заявка $2–3</span>
+        <div class="ppl" data-on="2"><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg></div>
+        <p class="cap"><b>2 из 10</b>реально готовы купить</p>
+      </div>
+      <div class="row up">
+        <span class="nm">Ролик с прогревом</span><span class="prc">заявка $5–6</span>
+        <div class="ppl" data-on="6"><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg><svg viewBox="0 0 20 34"><circle cx="10" cy="7" r="6"/><path d="M1 34V22a9 9 0 0 1 18 0v12z"/></svg></div>
+        <p class="cap"><b>6 из 10</b>реально готовы купить</p>
+      </div>
+      <p class="ft">Заявка вдвое дороже. Людей, готовых купить, втрое больше.</p>
+    </div>
+  </div>
+  <div class="wrap stats-h"><span class="tag">Наш опыт в цифрах</span></div>
+  <div class="wrap stats">
+    <div><b><span data-n="3000000" data-p="$">$0</span>+</b><span>вложили в рекламу наших клиентов за всё время</span></div>
+    <div><b>10–20</b><span>новых роликов пишем каждому проекту в месяц</span></div>
+    <div><b>до $5 000</b><span>в день тратим на рекламу одного проекта, и заявки не становятся хуже</span></div>
+  </div>
+</header>
+
+<!-- ПРОБЛЕМА -->
+<section class="paper">
+  <div class="wrap">
+    <span class="tag">Почему заявки есть, а продаж нет</span>
+    <h2 class="rv">2 880 заявок. <span class="mark">20 оплат.</span></h2>
+    <p class="lead rv">Так выглядела реклама одного из проектов до нас. Заявки по 52 цента, отдел продаж завален, в кассе пусто.</p>
+    <div class="fun" id="fun">
+      <div>
+        <h3>До нас</h3><p class="sub">Дешёвые заявки · месяц</p>
+        <dl><dt>Бюджет</dt><dd>$1 500</dd><dt>В кассе</dt><dd>$6 475</dd></dl>
+        <div class="bar"><span>Заявки <b>2 880</b></span><i data-w="100"></i></div>
+        <div class="bar"><span>Оплаты <b>20</b></span><i data-w="20"></i></div>
+        <div class="res"><span>Цена клиента</span><b>$75</b></div>
+      </div>
+      <div class="win">
+        <h3>С нами</h3><p class="sub">Прогретые заявки · месяц</p>
+        <dl><dt>Бюджет</dt><dd>$3 000</dd><dt>В кассе</dt><dd>$14 000</dd></dl>
+        <div class="bar"><span>Заявки <b>1 185</b></span><i data-w="41"></i></div>
+        <div class="bar"><span>Оплаты <b>98</b></span><i data-w="98"></i></div>
+        <div class="res"><span>Цена клиента</span><b>$31</b></div>
+      </div>
+    </div>
+    <span class="ex">проект: учебный центр · полосы заявок и оплат в разном масштабе</span>
+    <p class="lead rv" style="margin-top:20px"><b>Заявок в 2,4 раза меньше. Оплат почти в 5 раз больше.</b> Менеджеры перестали обзванивать тех, кто не помнит, что оставлял заявку.</p>
+  </div>
+</section>
+
+<!-- 4 ОТВЕТА -->
+<section>
+  <div class="wrap">
+    <span class="tag">Почему дешёвые заявки не платят</span>
+    <h2 class="rv">Человек не платит, пока не получил <span class="y">4 ответа</span></h2>
+    <div class="ans" id="ans">
+      <div>Зачем мне это?</div>
+      <div>Почему у вас?</div>
+      <div>Почему за эту цену?</div>
+      <div>Почему сейчас?</div>
+    </div>
+    <div class="adz">
+      <figure class="rv">
+        <div class="ph bad"><small>Автокредит</small><b>Быстро и выгодно!</b><em>Акция до пятницы</em><small>Одобрение за 15 минут</small><u>Оставить заявку</u></div>
+        <div class="dots"><i></i><i></i><i></i><i></i></div>
+        <figcaption><b>Картинка «в лоб»</b>0 ответов из 4. Телефон оставляют из любопытства.</figcaption>
+      </figure>
+      <figure class="rv w">
+        <div class="ph good"><span class="rec">▶ 2:00</span><span class="hd"></span><span class="bd"></span>
+          <p class="sub">Хотите в такси — <i>а машины нет?</i></p>
+          <p class="sub">Аренда съедает <i>половину</i></p>
+          <p class="sub">Считаем, сколько <i>останется вам</i></p>
+          <p class="sub">Приходите <i>на расчёт</i></p>
+          <span class="pb"></span></div>
+        <div class="dots ok"><i></i><i></i><i></i><i></i></div>
+        <figcaption><b>Ролик на 2 минуты</b>4 ответа из 4, ещё до звонка менеджера.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- КАЛЬКУЛЯТОР -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <span class="tag">Проверьте на своих цифрах</span>
+    <h2 class="rv">Сколько вам стоит <span class="y">один клиент</span>?</h2>
+    <p class="lead rv">Подвигайте ползунки. Займёт 20 секунд.</p>
+    <div class="calc rv">
+      <div>
+        <label>Рекламный бюджет в месяц <b id="vB"></b></label>
+        <input type="range" id="iB" min="500" max="20000" step="100" value="2000" aria-label="Рекламный бюджет в месяц">
+        <label>Заявок в месяц <b id="vL"></b></label>
+        <input type="range" id="iL" min="10" max="1500" step="10" value="400" aria-label="Заявок в месяц">
+        <label>Продаж в месяц <b id="vP"></b></label>
+        <input type="range" id="iP" min="1" max="150" step="1" value="8" aria-label="Продаж в месяц">
+      </div>
+      <div class="out">
+        <span class="tag">Цена клиента</span>
+        <div class="big" id="oCost"></div>
+        <div class="mini">
+          <div><b id="oLead"></b><span>цена заявки</span></div>
+          <div><b id="oConv"></b><span>заявок доходит до покупки</span></div>
+        </div>
+        <p id="oLost"></p>
+        <a href="#razbor" class="btn" style="margin-top:22px;align-self:flex-start">Найти, где они теряются</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- СИСТЕМА -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <span class="tag">Как мы работаем</span>
+    <h2 class="rv">Система <span class="y">«Двухминутный прогрев»</span></h2>
+    <p class="lead rv">Реклама продаёт до звонка менеджера. Мы считаем, сколько она принесла в кассу.</p>
+    <div class="steps">
+      <div class="step rv">
+        <span class="num">/// 001</span>
+        <h3>Смыслы от ваших клиентов</h3>
+        <p>Опрашиваем покупателей один на один и слушаем звонки отдела продаж. Из этого пишем ролики.</p>
+        <div class="viz v3"><em>Чего вы боялись перед покупкой?</em><em>«Что переплачу» ✓</em></div>
+      </div>
+      <div class="step rv">
+        <span class="num">/// 002</span>
+        <h3>Ролики, которые прогревают</h3>
+        <p>1,5–3 минуты, выглядят как рилс. 10–20 сценариев в месяц с раскадровкой и ТЗ. Статика без лимита.</p>
+        <div class="viz v2"><s>0:00 Хук</s><s>0:40 Причина</s><s>1:40 Призыв</s></div>
+      </div>
+      <div class="step rv">
+        <span class="num">/// 003</span>
+        <h3>Аналитика до продажи</h3>
+        <p>Каждый день по каждому ролику: заявки, квал, встречи, продажи.</p>
+        <div class="viz v1"><em>Ролик</em><u></u><em>Заявка</em><u></u><em>Продажа</em></div>
+      </div>
+      <div class="step rv">
+        <span class="num">/// 004</span>
+        <h3>Рост без просадки</h3>
+        <p>4–5 сегментов аудитории, 10–20 связок одновременно. Бюджет растёт, цена клиента нет.</p>
+        <div class="viz v4"><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ВИДЕО -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <span class="tag">Смотрите сами</span>
+    <h2 class="rv">Экскурсия по системе <span class="y">за одно видео</span></h2>
+    <div class="video rv">
+      <iframe src="https://kinescope.io/embed/vzmZ86ioGVpH9fbHCsqbjZ" title="Видео о нашем подходе к работе" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ПРИМЕРЫ СЦЕНАРИЕВ -->
+<section class="paper">
+  <div class="wrap">
+    <span class="tag">Что вы получаете на руки</span>
+    <h2 class="rv">Один продукт — три ролика <span class="mark">под разных людей</span></h2>
+    <p class="lead rv">Обычно рекламу показывают только тем, кто уже готов купить. Таких около 1% рынка. Мы пишем ролики и для остальных.</p>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="frames" id="frames"></div>
+    <p style="margin-top:16px"><span class="ex">пример: автокредит · структура сценария</span></p>
+  </div>
+</section>
+
+<!-- КЕЙСЫ -->
+<section id="cases">
+  <div class="wrap">
+    <span class="tag">Результаты</span>
+    <h2 class="rv">Проекты <span class="y">в цифрах</span></h2>
+    <p class="lead rv">Цифры из рекламных кабинетов и отчётов по продажам. У большинства проектов можно открыть скриншоты.</p>
+    <div class="feat rv">
+      <div>
+        <span class="meta">Онлайн-школа · год работы</span>
+        <h3>Школа маркетплейсов</h3>
+        <div class="kp">
+          <div><small>Вложено</small><b>$198 434</b></div>
+          <div><small>Продаж</small><b>2 556</b></div>
+          <div class="w"><small>Выручка</small><b>$668 621</b><em>3,4× к рекламе</em></div>
+        </div>
+        <p>Год вели рекламу на запуски курсов. Продажи менеджеры отмечали в отчёте каждую неделю.</p>
+      </div>
+      <div>
+        <div class="legend"><span>Выручка за месяц</span><span>Расход на рекламу</span></div>
+        <div class="chart"><div><i data-h="0.9"></i><u data-h="0.8"></u></div><div><i data-h="100.0"></i><u data-h="22.6"></u></div><div><i data-h="81.2"></i><u data-h="26.6"></u></div><div><i data-h="66.7"></i><u data-h="22.3"></u></div><div><i data-h="87.6"></i><u data-h="25.0"></u></div><div><i data-h="45.5"></i><u data-h="20.0"></u></div><div><i data-h="90.9"></i><u data-h="26.1"></u></div><div><i data-h="47.7"></i><u data-h="20.7"></u></div><div><i data-h="33.0"></i><u data-h="4.4"></u></div><div><i data-h="32.2"></i><u data-h="5.1"></u></div></div>
+        <div class="mon"><span>Апр</span><span>Авг</span><span>Сен</span><span>Окт</span><span>Ноя</span><span>Дек</span><span>Янв</span><span>Фев</span><span>Мар</span><span>Апр</span></div>
+        <p style="margin-top:14px">Июнь и июль 2023 в график не включены: расход за эти месяцы в отчётах не сохранился.</p>
+      </div>
+    </div>
+    <div class="hrow crow">
+      <div>
+        <h3>Ещё проекты</h3>
+        <p class="swipe">Листайте вбок <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></p>
+      </div>
+      <div class="arrows" data-for="casegrid"><button type="button" data-dir="-1" aria-label="Назад"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" data-dir="1" aria-label="Вперёд"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div>
+    </div>
+    <div class="cgrid" id="casegrid">
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l02.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Производство дверей</span><h3>Norma Dveri</h3></div></div><div class="kp"><div><small>Вложено</small><b>$51 402</b></div><div><small>Заявок</small><b>39 776</b></div><div class="w"><small>Договоров</small><b>1 401</b><em>клиент обходится в $37</em></div></div><p>Один договор — от 3 до 50 дверей.</p><button type="button" class="shot" data-imgs="i02.jpg,k02.jpg" data-t="Norma Dveri"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l01.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Онлайн-магазин косметики</span><h3>Comax Uz</h3></div></div><div class="kp"><div><small>Вложено</small><b>$14 434</b></div><div><small>Цена продажи</small><b>$2,75</b></div><div class="w"><small>Чистая прибыль</small><b>$97 130</b><em>ROMI на чистую прибыль 203%</em></div></div><p>Клиент обходится в $7 при среднем чеке $35.</p><button type="button" class="shot" data-imgs="i01.jpg,k01.jpg" data-t="Comax Uz"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l04.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Микрофинансовая организация</span><h3>Yaxshi Niyat</h3></div></div><div class="kp"><div><small>Вложено</small><b>$17 945</b></div><div><small>Заявок</small><b>42 109</b></div><div class="w"><small>Выдано кредитов</small><b>40+ млрд сум</b><em>за период работы</em></div></div><p>Заявка по $0,43, целевых — 45%.</p><button type="button" class="shot" data-imgs="i04.jpg,k04.jpg" data-t="Yaxshi Niyat"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l03.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Агентство занятости</span><h3>InterWork</h3></div></div><div class="kp"><div><small>Вложено</small><b>$8 754</b></div><div><small>Заявок</small><b>9 417</b></div><div class="w"><small>Цена клиента</small><b>$34 → $15</b><em>до нашей работы и после</em></div></div><p>Заявка в среднем по $0,93.</p><button type="button" class="shot" data-imgs="i03.jpg,k03.jpg" data-t="InterWork"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l11.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Клиника</span><h3>EMU Clinic</h3></div></div><div class="kp"><div><small>Вложено</small><b>$1 423</b></div><div><small>Заявок</small><b>974</b></div><div class="w"><small>Записей на операцию</small><b>62</b><em>целевых заявок около 55%</em></div></div><p>Заявка по $1,46.</p><button type="button" class="shot" data-imgs="i11.jpg,k11.jpg,k23.jpg" data-t="EMU Clinic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l14.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Туры в санаторий</span><h3>Naftalan Tour</h3></div></div><div class="kp"><div><small>Вложено</small><b>$2 384</b></div><div><small>Заявок</small><b>1 588</b></div><div class="w"><small>Продано путёвок</small><b>138</b><em>в покупку переходят 8,7%</em></div></div><p>Заявка по $1,47, целевых — 63%.</p><button type="button" class="shot" data-imgs="i14.jpg,k14.jpg" data-t="Naftalan Tour"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l12.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Магазин женской одежды</span><h3>Bespoke</h3></div></div><div class="kp"><div><small>Вложено</small><b>$2 545</b></div><div><small>Заявок</small><b>4 468</b></div><div class="w"><small>Покупок</small><b>900+</b><em>70% заявок — целевые</em></div></div><p>Заявка по $0,57, средний чек $40.</p><button type="button" class="shot" data-imgs="i12.jpg,k12.jpg" data-t="Bespoke"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l06.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Детские товары</span><h3>Tomiko</h3></div></div><div class="kp"><div><small>Вложено</small><b>$17 296</b></div><div><small>Охват</small><b>10 млн</b></div><div class="w"><small>Заказов на маркетплейсе</small><b>17 000+</b><em>+29 802 подписчика</em></div></div><p>Главная задача — узнаваемость бренда.</p><button type="button" class="shot" data-imgs="i06.jpg,k06.jpg" data-t="Tomiko"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l13.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Турфирма</span><h3>Miru Tour</h3></div></div><div class="kp"><div><small>Вложено</small><b>$4 892</b></div><div><small>Заявок</small><b>2 883</b></div><div class="w"><small>Целевых заявок</small><b>55%</b><em>средний чек $500</em></div></div><p>Заявка по $1,69, +6 054 подписчика.</p><button type="button" class="shot" data-imgs="i13.jpg,k13.jpg" data-t="Miru Tour"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l17.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Антигравийные плёнки</span><h3>Integra Film</h3></div></div><div class="kp"><div><small>Вложено</small><b>$3 966</b></div><div><small>Заявок</small><b>617</b></div><div class="w"><small>Продано рулонов</small><b>71</b><em>1 065 метров плёнки</em></div></div><p>Заявка по $6,43, средний чек $800.</p><button type="button" class="shot" data-imgs="i17.jpg,k17.jpg" data-t="Integra Film"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l18.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Производство одежды</span><h3>Basico</h3></div></div><div class="kp"><div><small>Вложено</small><b>$349</b></div><div><small>Заявок</small><b>1 163</b></div><div class="w"><small>Продажи</small><b>$3 040</b><em>ROMI 220%</em></div></div><p>Заявка по $0,30, +2 981 подписчик.</p><button type="button" class="shot" data-imgs="i18.jpg,k18.jpg" data-t="Basico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><span class="lg mono" aria-hidden="true">Б</span><div><span class="meta">Услуги для бизнеса</span><h3>Бухгалтерские услуги</h3></div></div><div class="kp"><div><small>Вложено</small><b>$4 426</b></div><div><small>Продаж</small><b>172</b></div><div class="w"><small>Выручка</small><b>$17 093</b><em>3,9× к рекламе</em></div></div><p>Реклама в Instagram, заявки в WhatsApp.</p></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l07.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Тренинги для врачей</span><h3>Medion Academy</h3></div></div><div class="kp"><div><small>Вложено</small><b>$10 285</b></div><div><small>Заявок</small><b>4 685</b></div><div class="w"><small>Целевых заявок</small><b>65%</b><em>заявка по $2,2</em></div></div><p>Запуск сразу на 10 курсов.</p><button type="button" class="shot" data-imgs="i07.jpg,k07.jpg,k21.jpg,k22.jpg" data-t="Medion Academy"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l09.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Обучение таргетологов</span><h3>Nelly Ads - School</h3></div></div><div class="kp"><div><small>Вложено</small><b>$7 729</b></div><div><small>Клиентов</small><b>65</b></div><div class="w"><small>Выручка</small><b>$39 320</b><em>окупаемость 508%</em></div></div><p>9 975 заявок по $0,77. Средний чек $600.</p><button type="button" class="shot" data-imgs="i09.jpg,k09.jpg" data-t="Nelly Ads - School"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l08.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Академия искусств</span><h3>Fashion Art Academy</h3></div></div><div class="kp"><div><small>Вложено</small><b>$4 418</b></div><div><small>Заявок</small><b>6 507</b></div><div class="w"><small>Доход</small><b>$14 700</b><em>ROMI 233%</em></div></div><p>Заявка по $0,68, охват больше миллиона человек.</p><button type="button" class="shot" data-imgs="i08.jpg,k08.jpg" data-t="Fashion Art Academy"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><span class="lg mono" aria-hidden="true">Ш</span><div><span class="meta">Онлайн-школа</span><h3>Школа психологии Анар Кыдыковой</h3></div></div><div class="kp"><div><small>Вложено</small><b>≈ $40 000</b></div><div><small>Выручка к рекламе</small><b>5×</b></div><div class="w"><small>Выручка запусков</small><b>100+ млн ₸</b><em>≈ $200 000+, по данным клиента</em></div></div><p>Реклама в переписки, дальше прогрев и продажи в директе. Видео-отзыв Анар есть ниже.</p></div>
+      <div class="cs rv"><div class="ch"><span class="lg mono" aria-hidden="true">Ш</span><div><span class="meta">Онлайн-школа</span><h3>Школа астрологии</h3></div></div><div class="kp"><div><small>Вложено</small><b>$234 357</b></div><div><small>Объявлений за год</small><b>257</b></div><div class="w"><small>Выручка проекта</small><b>от $3 млн</b><em>по данным клиента</em></div></div><p>Год рекламы на переписки и переходы.</p><button type="button" class="shot" data-imgs="c2.jpg" data-t="Школа астрологии"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l10.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Мастер-класс для врачей</span><h3>Запуск Нигоры Марифовны</h3></div></div><div class="kp"><div><small>Вложено</small><b>$598</b></div><div><small>Продаж</small><b>67</b></div><div class="w"><small>Окупаемость</small><b>×22</b><em>клиент обошёлся примерно в $9</em></div></div><p>1 107 заявок по $0,54. Средний чек $200.</p><button type="button" class="shot" data-imgs="i10.jpg,k10.jpg" data-t="Запуск Нигоры Марифовны"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l19.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Вебинар по финансам</span><h3>Tamilla Kurbanova</h3></div></div><div class="kp"><div><small>Вложено</small><b>$2 659</b></div><div><small>Регистраций</small><b>5 626</b></div><div class="w"><small>Целевых регистраций</small><b>70%+</b><em>регистрация по $0,47</em></div></div><p>Запуск на вебинар. Средний чек продукта $200.</p><button type="button" class="shot" data-imgs="i19.jpg,k19.jpg" data-t="Tamilla Kurbanova"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l15.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Женский форум</span><h3>Форум Лобар Жоновой</h3></div></div><div class="kp"><div><small>Вложено</small><b>$4 600</b></div><div><small>Заявок</small><b>7 396</b></div><div class="w"><small>Продаж</small><b>600+</b><em>средний чек около $100</em></div></div><p>Два форума. Заявка по $0,62, +5 275 подписчиков.</p><button type="button" class="shot" data-imgs="i15.jpg,k15.jpg" data-t="Форум Лобар Жоновой"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><img class="lg" src="media/l16.jpg" alt="" width="54" height="54" loading="lazy"><div><span class="meta">Обучение инвестициям</span><h3>Александр Мюллер</h3></div></div><div class="kp"><div><small>Вложено</small><b>$1 896</b></div><div><small>Заявок</small><b>578</b></div><div class="w"><small>Новых партнёров</small><b>100+</b><em>заявка по $2</em></div></div><p>+5 010 подписчиков. Партнёр остаётся в среднем 6 месяцев.</p><button type="button" class="shot" data-imgs="i16.jpg,k16.jpg" data-t="Александр Мюллер"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><span class="lg mono s" aria-hidden="true">NDA</span><div><span class="meta">Астрология</span><h3>Проект под NDA</h3></div></div><div class="kp"><div><small>Вложено</small><b>$360 984</b></div><div><small>Заявок</small><b>144 392</b></div><div class="w"><small>Продаж</small><b>24 543</b><em>ROMI 209%</em></div></div><p>Заявка по $2,5, в продажу переходят 17%.</p><button type="button" class="shot" data-imgs="k05.jpg,k24.jpg" data-t="Проект под NDA"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><span class="lg mono s" aria-hidden="true">NDA</span><div><span class="meta">Онлайн-проект</span><h3>Проект под NDA</h3></div></div><div class="kp"><div><small>Вложено</small><b>$92 847</b></div><div><small>Выручка к рекламе</small><b>≈ 3×</b></div><div class="w"><small>Выручка</small><b>≈ $278 000</b><em>по данным клиента</em></div></div><p>Переписки в мессенджерах по $0,27–0,72.</p><button type="button" class="shot" data-imgs="c4.jpg" data-t="Проект под NDA"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><span class="lg mono" aria-hidden="true">Н</span><div><span class="meta">Наставничество для экспертов</span><h3>Наставничество Ильи</h3></div></div><div class="kp"><div><small>Вложено</small><b>$12 714</b></div><div><small>Продано</small><b>500 + 500</b></div><div class="w"><small>Трафик</small><b>окупился 1 : 1</b><em>наставничество — сверху</em></div></div><p>500 стартовых продуктов и 500 мест на офлайн-мероприятия окупили рекламу.</p><button type="button" class="shot" data-imgs="c5.jpg" data-t="Наставничество Ильи"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></svg><span>Скриншоты</span></button></div>
+      <div class="cs rv"><div class="ch"><span class="lg mono" aria-hidden="true">З</span><div><span class="meta">Онлайн-курс</span><h3>Заработок на перезаливе видео</h3></div></div><div class="kp"><div><small>Вложено</small><b>$10 774</b></div><div><small>Продаж</small><b>164</b></div><div class="w"><small>Выручка</small><b>$47 719</b><em>4,4× к рекламе</em></div></div><p>8 006 заявок из WhatsApp и Instagram.</p></div>
+    </div>
+    <div class="ctrack" aria-hidden="true"><i></i></div>
+  </div>
+</section>
+
+<!-- ОТЗЫВЫ -->
+<section id="reviews">
+  <div class="wrap">
+    <div class="hrow">
+      <div>
+        <span class="tag">Отзывы</span>
+        <h2 class="rv">Что говорят <span class="y">клиенты</span></h2>
+      </div>
+      <div class="arrows" data-for="rsnap"><button type="button" data-dir="-1" aria-label="Назад"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" data-dir="1" aria-label="Вперёд"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div>
+    </div>
+    <p class="lead rv">Под каждым видео — главное из отзыва.</p>
+    <div class="snap" id="rsnap">
+      <div class="rw"><button type="button" class="yt" data-yt="0I9NdZBzHjg" aria-label="Видео-отзыв: Bespoke"><img src="media/p11.jpg" alt="" loading="lazy"><span class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11l9-5.5z"/></svg></span></button><h3>Bespoke</h3><small>Магазин женской одежды</small><p>Работаем почти год. Благодарит за целевую аудиторию и живых клиентов: «вы погружаетесь в сам бизнес».</p></div>
+      <div class="rw"><button type="button" class="yt" data-yt="ub8UR10HDzo" aria-label="Видео-отзыв: Comax Uz"><img src="media/p13.jpg" alt="" loading="lazy"><span class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11l9-5.5z"/></svg></span></button><h3>Comax Uz</h3><small>Онлайн-магазин косметики</small><p>До этого работали с тремя подрядчиками — было хуже и непонятно. Здесь проблемы объясняют понятно и вовремя дают отчёты.</p></div>
+      <div class="rw"><button type="button" class="yt" data-yt="MYuHyFXR0gc" aria-label="Видео-отзыв: Александр Мюллер"><img src="media/p12.jpg" alt="" loading="lazy"><span class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11l9-5.5z"/></svg></span></button><h3>Александр Мюллер</h3><small>Обучение инвестициям</small><p>Ждал, что клиентов сначала будет мало. Заявок пришло столько, что не успевал обрабатывать и попросил сбавить обороты.</p></div>
+      <div class="rw"><button type="button" class="yt" data-yt="q0SC_9QqLYg" aria-label="Видео-отзыв: Лобар Жонова"><img src="media/p14.jpg" alt="" loading="lazy"><span class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11l9-5.5z"/></svg></span></button><h3>Лобар Жонова</h3><small>Женский форум</small><p>За несколько дней на новый аккаунт пришло почти 8 тысяч заявок — только через таргет.</p></div>
+      <div class="rw"><button type="button" class="yt" data-yt="bCILl0vnzys" aria-label="Видео-отзыв: Нигора Марифовна"><img src="media/p15.jpg" alt="" loading="lazy"><span class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11l9-5.5z"/></svg></span></button><h3>Нигора Марифовна</h3><small>Вебинар для врачей</small><p>Набрали качественную аудиторию на вебинар. Продали 53 участникам.</p></div>
+      <div class="rw"><button type="button" class="yt" data-yt="eHswUY95RwI" aria-label="Видео-отзыв: Norma Dveri"><img src="media/p16.jpg" alt="" loading="lazy"><span class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11l9-5.5z"/></svg></span></button><h3>Norma Dveri</h3><small>Производство дверей</small><p>Прежние подрядчики «кормили следующим месяцем» и к обещанным цифрам не подходили. Здесь ценят честность, ответственность и результат.</p></div>
+      <div class="rw"><button type="button" class="yt" data-yt="F-h7U-JVHQI" aria-label="Видео-отзыв: Анар Кыдыкова"><img src="media/p06.jpg" alt="" loading="lazy"><span class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11l9-5.5z"/></svg></span></button><h3>Анар Кыдыкова</h3><small>Школа психологии</small><p>Заявка подешевела с $4 до $1. На новых заявках сделала запуск на 50 млн ₸.</p></div>
+      <div class="rw"><button type="button" class="yt" data-yt="FfO6_ii-s6o" aria-label="Видео-отзыв: Леонид"><img src="media/p08.jpg" alt="" loading="lazy"><span class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11l9-5.5z"/></svg></span></button><h3>Леонид</h3><small>Онлайн-проект, с 2019 года</small><p>План — $1 000 в сутки с окупаемостью от ×3. Цена заявки и оплаченного клиента стала ниже, чем до просадки.</p></div>
+      <div class="rw"><button type="button" class="yt" data-yt="RPbASLIyHWU" aria-label="Видео-отзыв: Тамерлан"><img src="media/p09.jpg" alt="" loading="lazy"><span class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11l9-5.5z"/></svg></span></button><h3>Тамерлан</h3><small>Продюсер экспертов</small><p>Около $10 000 рекламного бюджета в месяц. Окупаемость минимум ×7.</p></div>
+      <div class="rw"><button type="button" class="yt" data-yt="U7pQQWk8agg" aria-label="Видео-отзыв: Анна"><img src="media/p02.jpg" alt="" loading="lazy"><span class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11l9-5.5z"/></svg></span></button><h3>Анна</h3><small>Блог и обучение по криптовалюте</small><p>За три запуска — больше $50 000. Обычная окупаемость ×4–×5.</p></div>
+      <div class="rw"><button type="button" class="yt" data-yt="28TN7W8fwf4" aria-label="Видео-отзыв: Артём"><img src="media/p07.jpg" alt="" loading="lazy"><span class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11l9-5.5z"/></svg></span></button><h3>Артём</h3><small>Маркетолог, автоворонки</small><p>Около 20 000 заявок за два месяца. «Лучший таргетолог из всех, что были».</p></div>
+      <div class="rw"><button type="button" class="yt" data-yt="koEhnSW88ao" aria-label="Видео-отзыв: Айым"><img src="media/p03.jpg" alt="" loading="lazy"><span class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11l9-5.5z"/></svg></span></button><h3>Айым</h3><small>Психолог</small><p>С мая по сентябрь +1 050 подписчиков. Первый поток — больше 2 млн ₸.</p></div>
+      <div class="rw"><button type="button" class="yt" data-yt="IdQkOGi4c_M" aria-label="Видео-отзыв: Илья"><img src="media/p05.jpg" alt="" loading="lazy"><span class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11l9-5.5z"/></svg></span></button><h3>Илья</h3><small>Продюсер, воронки и запуски</small><p>Реклама окупалась 1 к 1 на недорогих продуктах, иногда в плюс.</p></div>
+      <div class="rw"><button type="button" class="yt" data-yt="u591t57y1cc" aria-label="Видео-отзыв: Жанна"><img src="media/p01.jpg" alt="" loading="lazy"><span class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11l9-5.5z"/></svg></span></button><h3>Жанна</h3><small>Нутрициолог</small><p>Стабильный поток заявок в рамках плана. Ни одного дня без трафика.</p></div>
+      <div class="rw"><button type="button" class="yt" data-yt="ZakFeHLYhuU" aria-label="Видео-отзыв: InterWork"><img src="media/p10.jpg" alt="" loading="lazy"><span class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11l9-5.5z"/></svg></span></button><h3>InterWork</h3><small>Агентство трудоустройства за рубежом</small><p>Третий месяц работы: выросли конверсия заявок и их качество.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- КТО МЫ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <span class="tag">Кто ведёт проект</span>
+    <h2 class="rv">Работаем <span class="y">вдвоём</span></h2>
+    <div class="team">
+      <div class="rv"><img src="media/t1.jpg" alt="Рафаэль" width="72" height="72" loading="lazy"><p><b>Рафаэль</b><span class="soc"><a href="https://www.instagram.com/rafael.traffic/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r=".6"/></svg><span>Instagram</span></a><a href="https://t.me/+s_EHSe1dEuYyNzMy" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 4.5L3.5 11l5.5 2 2 6 3-4 4.5 3.5z"/><path d="M9 13l7-5"/></svg><span>Telegram</span></a><a href="https://www.youtube.com/@rafaelyusupov" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="4"/><path d="M10.5 9.5v5l4-2.5z"/></svg><span>YouTube</span></a></span></p></div>
+      <div class="rv"><img src="media/t2.jpg" alt="Рустам" width="72" height="72" loading="lazy"><p><b>Рустам</b><span class="soc"><a href="https://www.instagram.com/s1mple_target/reels/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r=".6"/></svg><span>Instagram</span></a><a href="https://t.me/s1mple_target" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 4.5L3.5 11l5.5 2 2 6 3-4 4.5 3.5z"/><path d="M9 13l7-5"/></svg><span>Telegram</span></a></span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- КОМУ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <span class="tag">Берём не всех</span>
+    <h2 class="rv">Нам <span class="y">по пути</span>, если</h2>
+    <div class="fit">
+      <div class="yes rv"><h3>Да</h3><ul>
+        <li>Бюджет на рекламу от $1 500 в месяц</li>
+        <li>Есть отдел продаж и учёт сделок</li>
+        <li>Команда готова снимать ролики на телефон</li>
+        <li>Вы покажете цифры продаж</li>
+      </ul></div>
+      <div class="no rv"><h3>Нет</h3><ul>
+        <li>Нужно «побольше лидов подешевле»</li>
+        <li>Снимать некому</li>
+        <li>Продажи закрыты от подрядчика</li>
+        <li>Заявки обрабатывают через день</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- КВИЗ -->
+<section id="razbor" style="padding-top:0">
+  <div class="wrap quiz">
+    <div>
+      <span class="tag">Первый шаг · бесплатно</span>
+      <h2>Онлайн-экскурсия: примерим систему на <span class="y">ваш бизнес</span></h2>
+      <ol>
+        <li>Покажем систему изнутри: сценарии, связки, отчёты</li>
+        <li>Посчитаем вашу цену клиента и где теряются люди</li>
+        <li>Скажем, какие ролики сняли бы под ваш продукт</li>
+        <li>Скажем прямо, если не видим, как окупить рекламу</li>
+      </ol>
+    </div>
+    <form id="f" novalidate>
+      <div class="fhead"><b>Короткий опрос</b><span>3 вопроса · 30 секунд</span></div>
+      <p class="fsub">Ответьте на три вопроса — и мы запишем вас на экскурсию.</p>
+      <div class="prog"><i id="pr"></i></div>
+      <div class="qs on" data-k="niche">
+        <h3>1 из 3 · Что у вас?</h3>
+        <button type="button" class="opt">Услуги</button>
+        <button type="button" class="opt">Обучение и курсы</button>
+        <button type="button" class="opt">Финансы и кредиты</button>
+        <button type="button" class="opt">Товары и производство</button>
+        <button type="button" class="opt">Другое</button>
+      </div>
+      <div class="qs" data-k="budget">
+        <h3>2 из 3 · Бюджет на рекламу в месяц</h3>
+        <button type="button" class="opt">До $1 500</button>
+        <button type="button" class="opt">$1 500 – $5 000</button>
+        <button type="button" class="opt">Больше $5 000</button>
+        <button type="button" class="back">← Назад</button>
+      </div>
+      <div class="qs">
+        <h3>3 из 3 · Куда вам написать?</h3>
+        <input name="name" placeholder="Имя" autocomplete="name" required aria-label="Имя">
+        <input name="company" placeholder="Сайт или Instagram компании" required aria-label="Сайт или Instagram компании">
+        <input name="contact" placeholder="Telegram или WhatsApp" required aria-label="Telegram или WhatsApp">
+        <button class="btn" type="submit">Записаться на экскурсию</button>
+        <p id="msg" role="status"></p>
+        <button type="button" class="back">← Назад</button>
+      </div>
+      <div class="qs" id="ok">
+        <h3 class="y" style="font-size:34px">Заявка принята</h3>
+        <p style="margin-top:12px;color:#cfc9bc">Напишем вам в течение рабочего дня и договоримся о времени.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <span class="tag">Вопросы</span>
+    <h2>Коротко о главном</h2>
+    <details><summary>У нас уже есть таргетолог</summary>
+      <p>Спросите его: какой креатив за месяц принёс больше всего продаж и сколько стоила одна. Если ответ есть — менять ничего не нужно. Если в ответ вы слышите цену лида — приходите на экскурсию.</p></details>
+    <details><summary>Двухминутную рекламу правда смотрят?</summary>
+      <p>Смотрят, если она написана как рилс, а не как реклама. После неё люди помнят, что оставляли заявку, и сами ждут звонка.</p></details>
+    <details><summary>У нас нет CRM</summary>
+      <p>Хватит таблицы: кто оплатил, когда, контакт. Аналитику соберём под то, что есть.</p></details>
+    <details><summary>У нас нет оператора</summary>
+      <p>Он не нужен. Ролики снимаются на телефон: сотрудник, менеджер, руководитель. В ТЗ написано, что говорить и как держать кадр.</p></details>
+    <details><summary>Заявки станут дороже?</summary>
+      <p>Да. В одном проекте заявки по $2–3 давали 15–20% квала, а по $5–6 — от 60%. Смотрим на цену клиента, а не заявки.</p></details>
+    <details><summary>Вы гарантируете результат?</summary>
+      <p>Число продаж зависит ещё от продукта, цены и отдела продаж, поэтому честно его не обещает никто. Мы гарантируем, что вы всегда видите, сколько стоит клиент и окупается ли реклама.</p></details>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <div class="fl"><div><b>Рафаэль</b><span class="soc"><a href="https://www.instagram.com/rafael.traffic/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r=".6"/></svg><span>Instagram</span></a><a href="https://t.me/+s_EHSe1dEuYyNzMy" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 4.5L3.5 11l5.5 2 2 6 3-4 4.5 3.5z"/><path d="M9 13l7-5"/></svg><span>Telegram</span></a><a href="https://www.youtube.com/@rafaelyusupov" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="4"/><path d="M10.5 9.5v5l4-2.5z"/></svg><span>YouTube</span></a></span></div><div><b>Рустам</b><span class="soc"><a href="https://www.instagram.com/s1mple_target/reels/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r=".6"/></svg><span>Instagram</span></a><a href="https://t.me/s1mple_target" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 4.5L3.5 11l5.5 2 2 6 3-4 4.5 3.5z"/><path d="M9 13l7-5"/></svg><span>Telegram</span></a></span></div></div>
+  <p style="margin-top:22px">Сайт не является частью Meta Platforms, Inc. и не связан с ней.</p>
+</div></footer>
+
+<dialog id="lb" aria-label="Скриншоты проекта">
+  <div class="lbh"><h3></h3><button type="button" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="lbin"></div>
+</dialog>
+
+
+<script>
+// ===== НАСТРОЙКА: адрес, куда отправлять заявки (вебхук CRM, бота или формы). Пока пусто — заявки не уходят.
+var ENDPOINT = '';
+
+var $ = function (s, r) { return (r || document).querySelector(s); };
+var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+var fmt = function (n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' '); };
+
+// появление блоков, счётчики и полосы воронки
+function countUp(el) {
+  var to = +el.dataset.n, p = el.dataset.p || '', t0 = performance.now();
+  (function step(t) {
+    var k = Math.min((t - t0) / 1300, 1), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = p + fmt(to * e);
+    if (k < 1) requestAnimationFrame(step);
+  })(t0);
+}
+var io = new IntersectionObserver(function (es) {
+  es.forEach(function (e) {
+    if (!e.isIntersecting) return;
+    var el = e.target; io.unobserve(el);
+    if (el.id === 'dash') { $$('.ppl', el).forEach(function (pp, r) { $$('svg', pp).slice(0, +pp.dataset.on).forEach(function (m, i) { setTimeout(function () { m.classList.add('on'); }, 300 + r * 500 + i * 160); }); }); setTimeout(function () { el.classList.add('done'); }, 1200); }
+    else if (el.id === 'fun') { $$('i', el).forEach(function (b, i) { setTimeout(function () { b.style.width = b.dataset.w + '%'; }, (i % 2) * 250); }); }
+    else if (el.id === 'ans') { $$('div', el).forEach(function (d, i) { setTimeout(function () { d.classList.add('in'); }, 300 + i * 450); }); }
+    else if (el.classList.contains('chart')) { $$('[data-h]', el).forEach(function (b, i) { setTimeout(function () { b.style.height = b.dataset.h + '%'; }, 200 + (i >> 1) * 70); }); }
+    else if (el.dataset.n) countUp(el);
+    else el.classList.add('in');
+  });
+}, { threshold: .2 });
+$$('.rv').forEach(function (el, i) { el.style.transitionDelay = (i % 4) * 70 + 'ms'; io.observe(el); });
+io.observe($('#dash')); io.observe($('#fun')); io.observe($('#ans')); $$('.stats [data-n]').forEach(function (e) { io.observe(e); });
+io.observe($('.chart'));
+addEventListener('scroll', function () { var h = document.documentElement; $('#bar').style.width = h.scrollTop / (h.scrollHeight - innerHeight) * 100 + '%'; }, { passive: true });
+
+// калькулятор цены клиента
+function calc() {
+  var B = +$('#iB').value, L = +$('#iL').value, P = Math.min(+$('#iP').value, L);
+  $('#vB').textContent = '$' + fmt(B); $('#vL').textContent = fmt(L); $('#vP').textContent = P;
+  $('#oCost').textContent = '$' + fmt(B / P);
+  $('#oLead').textContent = '$' + (B / L < 10 ? (B / L).toFixed(1).replace('.', ',') : fmt(B / L));
+  $('#oConv').textContent = (P / L * 100).toFixed(1).replace('.', ',') + '%';
+  $('#oLost').innerHTML = '<b style="color:#f5f2ea">' + fmt(L - P) + ' из ' + fmt(L) + '</b> заявок не дошли до покупки. Менеджеры обработали их впустую.';
+}
+['iB', 'iL', 'iP'].forEach(function (id) { $('#' + id).addEventListener('input', calc); }); calc();
+
+// примеры сценариев по сегментам аудитории
+var EX = {
+  'Уже ищет': ['«Ищете автокредит? Сравните платёж до подачи заявки»', '«В каждом банке свои условия, и везде мелкий шрифт»', '«Ставка в рекламе и платёж в договоре — разные цифры»', '«Считаем полный платёж при вас, по вашим данным»', '«Приходите на расчёт и узнайте точную сумму»'],
+  'Сомневается': ['«Боитесь, что кредит съест весь доход?»', '«Знакомый взял — и теперь работает на банк»', '«Платёж считают от машины мечты, а не от вашего дохода»', '«Мы считаем наоборот: сколько останется вам после платежа»', '«Приходите на расчёт. Не сойдётся — так и скажем»'],
+  'Ещё не думал': ['«Хотите работать в такси, а машины нет?»', '«Аренда забирает половину заработка»', '«Вы платите за чужую машину вместо своей»', '«Покажем расчёт: кредит против аренды и сколько остаётся семье»', '«Приходите на расчёт, это бесплатно»']
+};
+var BEATS = [['0:00', 'Хук'], ['0:10', 'Боль'], ['0:40', 'Причина'], ['1:10', 'Решение'], ['1:40', 'Мягкий призыв']];
+function showEx(name) {
+  $$('#tabs button').forEach(function (b) { b.classList.toggle('on', b.textContent === name); });
+  $('#frames').innerHTML = EX[name].map(function (q, i) {
+    return '<div class="frame"><div class="t"><b>' + BEATS[i][0] + '</b>' + BEATS[i][1] + '</div><div class="q">' + q + '</div></div>';
+  }).join('');
+}
+Object.keys(EX).forEach(function (name) {
+  var b = document.createElement('button'); b.type = 'button'; b.textContent = name;
+  b.addEventListener('click', function () { showEx(name); }); $('#tabs').appendChild(b);
+});
+showEx('Ещё не думал');
+
+// проекты: окно со скриншотами и «показать все»
+var lb = $('#lb');
+$$('.cs .shot').forEach(function (b) {
+  b.addEventListener('click', function () {
+    $('h3', lb).textContent = b.dataset.t;
+    $('.lbin', lb).innerHTML = b.dataset.imgs.split(',').map(function (f) {
+      return '<img' + (f.charAt(0) === 'i' ? ' class="pf"' : '') + ' src="media/' + f + '" alt="Скриншот проекта">';
+    }).join('');
+    lb.showModal();
+  });
+});
+$('.lbh button', lb).addEventListener('click', function () { lb.close(); });
+lb.addEventListener('click', function (e) { if (e.target === lb) lb.close(); });
+
+// отзывы: стрелки и одно играющее видео
+var rs = $('#rsnap');
+$$('.arrows').forEach(function (a) {
+  var el = document.getElementById(a.dataset.for), bs = $$('button', a);
+  if (!el) return;
+  function upd() {
+    var max = el.scrollWidth - el.clientWidth, t = $('.ctrack i');
+    bs[0].disabled = el.scrollLeft < 4; bs[1].disabled = el.scrollLeft > max - 4;
+    if (t && el.id === 'casegrid') {
+      var w = Math.max(el.clientWidth / el.scrollWidth * 100, 10);
+      t.style.width = w + '%'; t.style.marginLeft = (max > 0 ? el.scrollLeft / max : 0) * (100 - w) + '%';
+    }
+  }
+  bs.forEach(function (b) { b.addEventListener('click', function () {
+    var step = el.children[1].offsetLeft - el.children[0].offsetLeft;
+    el.scrollTo({ left: (Math.round(el.scrollLeft / step) + +b.dataset.dir) * step, behavior: 'smooth' });
+  }); });
+  el.addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
+});
+var vids = $$('video', rs);
+vids.forEach(function (v) { v.addEventListener('play', function () { vids.forEach(function (o) { if (o !== v) o.pause(); }); }); });
+
+// квиз-заявка
+var steps = $$('.qs'), cur = 0, data = {};
+function go(i) { steps[cur].classList.remove('on'); cur = i; steps[cur].classList.add('on'); $('#pr').style.width = Math.min((cur + 1) / 3 * 100, 100) + '%'; }
+$$('.opt').forEach(function (b) { b.addEventListener('click', function () { data[b.parentNode.dataset.k] = b.textContent; go(cur + 1); }); });
+$$('.back').forEach(function (b) { b.addEventListener('click', function () { go(cur - 1); }); });
+$('#f').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var f = e.target, msg = $('#msg');
+  if (!f.name.value.trim() || !f.company.value.trim() || !f.contact.value.trim()) { msg.textContent = 'Заполните три поля, чтобы мы подготовились к встрече.'; return; }
+  data.name = f.name.value.trim(); data.company = f.company.value.trim(); data.contact = f.contact.value.trim(); data.page = location.pathname;
+  if (!ENDPOINT) { msg.textContent = 'Приём заявок ещё не подключён: заявка не отправлена.'; return; }
+  msg.textContent = 'Отправляем…';
+  fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+    .then(function (r) { if (!r.ok) throw 0; go(3); })
+    .catch(function () { msg.textContent = 'Не получилось отправить. Попробуйте ещё раз.'; });
+});
+$$('.yt').forEach(function (b) {
+  b.addEventListener('click', function () {
+    $$('.rw iframe').forEach(function (f) { f.previousElementSibling.hidden = false; f.remove(); });
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + b.dataset.yt + '?autoplay=1&rel=0&playsinline=1';
+    f.title = b.getAttribute('aria-label');
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.allowFullscreen = true;
+    b.hidden = true;
+    b.after(f);
+  });
+});
+</script>
+</body>
+</html>
